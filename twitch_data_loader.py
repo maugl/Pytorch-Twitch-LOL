@@ -82,9 +82,9 @@ class Twitch(data.Dataset):
             #video_list.append(cap)
             #print('Video: frames({})'.format(int(cap.nframes)))
             # Load text json file
-            text = json.load(open(segs[1]))
+            text = json.load(open(segs[0]))
             # Load GT json file
-            gt   = np.load(open(segs[2]))
+            gt   = np.load(open(segs[1]))
             print('Gt : frames({})'.format(len(gt)))
             text_list.append(text)
             gt_list.append(gt)
