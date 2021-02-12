@@ -84,7 +84,8 @@ class Twitch(data.Dataset):
             # Load text json file
             text = json.load(open(segs[0]))
             # Load GT json file
-            gt   = np.load(open(segs[1]))
+            # add encoding for compatibility with python3
+            gt   = np.load(open(segs[1]), encoding='ASCII')
             print('Gt : frames({})'.format(len(gt)))
             text_list.append(text)
             gt_list.append(gt)
