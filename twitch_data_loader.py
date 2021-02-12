@@ -80,7 +80,7 @@ class Twitch(data.Dataset):
             #cap = FFMPEG_VideoReader(segs[0])
             #cap.initialize()
             #video_list.append(cap)
-            print('Video: frames({})'.format(int(cap.nframes)))
+            #print('Video: frames({})'.format(int(cap.nframes)))
             # Load text json file
             text = json.load(open(segs[1]))
             # Load GT json file
