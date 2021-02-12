@@ -15,7 +15,7 @@ from data import Dictionary
 
 class Twitch(data.Dataset):
     def __init__(self, root, list_file, number=1000, transform=None, text_transform=None,
-            prod_Img=True, prod_Text=True, multi_frame=1, text_window=150, text_delay=0, gt_range=0.25, word=False, corpus = None):
+            prod_Img=False, prod_Text=True, multi_frame=1, text_window=150, text_delay=0, gt_range=0.25, word=False, corpus = None):
         self.root = root
         self.__load_set(list_file)
         self.transform = transform
@@ -74,11 +74,11 @@ class Twitch(data.Dataset):
             segs = line.split(' ')
             print('=>Load Video', segs)
             assert(len(segs) == 3)
-            segs = [ os.path.join(self.root, seg) for seg in segs ]
+            segs = [ os.path.join(self.root, seg) for seg in segs[1:] ]
 
-            video_list.append(segs[0])
-            cap = FFMPEG_VideoReader(segs[0])
-            cap.initialize()
+            #video_list.append(segs[0])
+            #cap = FFMPEG_VideoReader(segs[0])
+            #cap.initialize()
             #video_list.append(cap)
             print('Video: frames({})'.format(int(cap.nframes)))
             # Load text json file
@@ -90,7 +90,7 @@ class Twitch(data.Dataset):
             gt_list.append(gt)
             
 
-        self.video_list = video_list
+        #self.video_list = video_list
         self.text_list = text_list
         self.gt_list  = gt_list
 
