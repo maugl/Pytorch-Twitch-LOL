@@ -15,7 +15,7 @@ from data import Dictionary
 
 class Twitch(data.Dataset):
     def __init__(self, root, list_file, number=1000, transform=None, text_transform=None,
-            prod_Img=False, prod_Text=True, multi_frame=1, text_window=150, text_delay=0, gt_range=0.25, word=False, corpus = None):
+            prod_Img=False, prod_Text=True, multi_frame=1, text_window=150, text_delay=0, gt_range=0.25, word=False, corpus = None, FMST="\n"):
         self.root = root
         self.__load_set(list_file)
         self.transform = transform
@@ -30,7 +30,8 @@ class Twitch(data.Dataset):
         self.text_delay = text_delay
         self.WeightedSampling = [] 
         self.word = word
-        self.corpus = corpus 
+        self.corpus = corpus
+        self.FMST = FMST
         if self.word  and corpus == None:
             self.__set_corpus()
         counter = 0
@@ -172,8 +173,8 @@ class Twitch(data.Dataset):
                     : min(vframe + self.text_window + self.text_delay, len(self.text_list[vid]) )]
             # use different delimiter for comments as every comment end in \n
             # text = '\n'.join(text)
-            # <++FMST++> - frame separation token
-            text = '<++FMST++>'.join(text)
+            # FMST - frame separation token
+            text = self.FMST.join(text)
             # following https://pytorch.org/tutorials/beginner/data_loading_tutorial.html
             if self.text_transform:
                 text = self.text_transform(text)
