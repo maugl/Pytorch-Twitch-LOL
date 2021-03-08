@@ -171,6 +171,9 @@ class Twitch(data.Dataset):
             text = self.text_list[vid][min(vframe + self.text_delay, len(self.text_list[vid]))
                     : min(vframe + self.text_window + self.text_delay, len(self.text_list[vid]) )]
             text = '\n'.join(text)
+            # following https://pytorch.org/tutorials/beginner/data_loading_tutorial.html
+            if self.text_transform:
+                text = self.text_transform(text)
 
         gt   = self.gt_list[vid][vframe]
 
